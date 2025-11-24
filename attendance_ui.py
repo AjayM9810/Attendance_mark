@@ -97,7 +97,8 @@ if "cap" not in st.session_state:
 
 if start_button and not st.session_state.camera_running:
     st.session_state.camera_running = True
-    st.session_state.cap = cv2.VideoCapture(0)
+    # st.session_state.cap = cv2.VideoCapture(0)
+    st.session_state.cap = "browser"
 
 if stop_button and st.session_state.camera_running:
     st.session_state.camera_running = False
@@ -105,11 +106,16 @@ if stop_button and st.session_state.camera_running:
         st.session_state.cap.release()
         st.session_state.cap = None
 
-if st.session_state.camera_running and st.session_state.cap:
-    ret, frame = st.session_state.cap.read()
-    if not ret:
-        st.error('Camera not available')
-    else:
+if st.session_state.camera_running and st.session_state.cap == "browser":
+    img_file = st.camera_input("📷 Capture your face")
+    if img_file is not none:
+        bytes_data = img_file.getvalue()
+        np_arr = np.frombuffer(bytes_data, np.uint8)
+        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+    # ret, frame = st.session_state.cap.read()
+    # if not ret:
+    #     st.error('Camera not available')
+    # else:
         label, confidence = predict_face(frame)
 
         if label is not None:
@@ -132,4 +138,5 @@ if st.session_state.camera_running and st.session_state.cap:
 
 if st.button("📊 Finalize Day"):
     update_break_time(file)
+
     st.info("Break time updated")
