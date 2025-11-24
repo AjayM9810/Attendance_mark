@@ -2,6 +2,7 @@ import streamlit as st
 import base64
 import cv2
 import pandas as pd
+import numpy as np
 from mark_excel import predict_face, log_attendance, init_csv, update_break_time
 from datetime import datetime
 
@@ -140,4 +141,5 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
