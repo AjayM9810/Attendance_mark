@@ -7,12 +7,12 @@ from mark_excel import predict_face, log_attendance, init_csv, update_break_time
 from datetime import datetime
 import requests
 
-url = "https://your-storage-link/fine_tuned_model.h5"
+url = "https://github.com/AjayM9810/Attendance_mark/fine_tuned_model.h5"
 r = requests.get(url)
 with open("fine_tuned_model.h5", "wb") as f:
     f.write(r.content)
-
 model = tf.keras.models.load_model("fine_tuned_model.h5")
+
 def get_base64_of_image(image_file):
     with open(image_file, "rb") as f:
         data = f.read()
@@ -148,4 +148,5 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated"
+
 
