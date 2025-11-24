@@ -147,6 +147,4 @@ if st.session_state.camera_running and st.session_state.cap == "browser":
 if st.button("📊 Finalize Day"):
     update_break_time(file)
 
-    st.info("Break time updated"
-
-
+    st.info("Break time updated")
