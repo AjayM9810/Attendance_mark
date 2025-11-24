@@ -117,7 +117,6 @@ def update_break_time(path="attendance.csv"):
 if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
     path = init_csv("attendance.csv")
-    break_updated = False
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -134,11 +133,6 @@ if __name__ == "__main__":
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
         now = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%H:%M")
-        if now >= "18:00" and not break_updated:
-            update_break_time(path)
-            break_updated = True
-
 
     cap.release()
-
     cv2.destroyAllWindows()
