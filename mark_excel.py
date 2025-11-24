@@ -3,6 +3,8 @@ import cv2, os, csv, pickle
 import numpy as np
 from datetime import datetime
 from mtcnn import MTCNN
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 model = tf.keras.models.load_model("fine_tuned_model.h5")
 with open("real_names.pkl", "rb") as f:
@@ -36,7 +38,7 @@ def init_csv(path = "attendance.csv"):
 
 # check if already marked today
 def already_marked_today(name, path="attendance.csv"):
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d")
     with open(path, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         next(reader) 
@@ -55,7 +57,7 @@ def get_status(now):
         return "Break"
 
 def log_attendance(label, confidence, path="attendance.csv"):
-    now = datetime.now()
+    now = datetime.now(ZoneInfo("Asia/Kolkata"))
     # First mark of day -- Login
     if not already_marked_today(label, path):
         status = "Login"
@@ -71,7 +73,7 @@ def log_attendance(label, confidence, path="attendance.csv"):
     print(f"{status} marked for {label} at {now} ({remarks})")
 
 def calculate_total_break(name, path="attendance.csv"):
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d")
     times = []
     with open(path, 'r', encoding= "utf-8") as f:
         reader  = csv.reader(f)
@@ -87,7 +89,7 @@ def calculate_total_break(name, path="attendance.csv"):
     return total_break//60  #Converted to Minutes
 
 def update_break_time(path="attendance.csv"):
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d")
     rows = []
     with open(path, "r") as f:
         reader = csv.reader(f)
@@ -131,11 +133,12 @@ if __name__ == "__main__":
         cv2.imshow("Attendance System", frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
-        now = datetime.now().strftime("%H:%M")
+        now = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%H:%M")
         if now >= "18:00" and not break_updated:
             update_break_time(path)
             break_updated = True
 
 
     cap.release()
+
     cv2.destroyAllWindows()
