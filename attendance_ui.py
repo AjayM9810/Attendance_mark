@@ -2,6 +2,7 @@ import tensorflow as tf
 import streamlit as st
 import base64
 import cv2
+import pickle
 import pandas as pd
 import numpy as np
 from mark_excel import predict_face, log_attendance, init_csv, update_break_time
@@ -10,8 +11,8 @@ import requests
 
 url = "https://github.com/AjayM9810/Attendance_mark/fine_tuned_model.h5"
 r = requests.get(url)
-with open("fine_tuned_model.h5", "wb") as f:
-    f.write(r.content)
+with open("real_names.pkl", "rb") as f:
+    class_names = pickle.load(f)
 model = tf.keras.models.load_model("fine_tuned_model.h5")
 
 def get_base64_of_image(image_file):
@@ -149,4 +150,5 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
