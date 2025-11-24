@@ -140,6 +140,9 @@ if st.session_state.camera_running and st.session_state.cap == "browser":
                     log_attendance(label, confidence,file)
                     status = "Login" if "09:00" <= time_str[:5] <= "09:30" else "Logout" if time_str[:5]>= "18:00" else "Break"
                     st.success(f"{status} for {label} at {time_str}")
+                    if status == "Logout":
+                        update_break_time(file)
+                        st.info("Break time will be updated automatically at logout")
             # with col2:
                 # if st.button("🔄 Recapture"):
                     # st.warning("Please Confirm if Verified✅")
@@ -151,6 +154,7 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
 
 
