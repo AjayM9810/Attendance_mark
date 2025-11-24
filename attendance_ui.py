@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from mark_excel import predict_face, log_attendance, init_csv, update_break_time
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import requests
 
 url = "https://github.com/AjayM9810/Attendance_mark/fine_tuned_model.h5"
@@ -129,10 +130,10 @@ if st.session_state.camera_running and st.session_state.cap == "browser":
         label, confidence = predict_face(frame)
 
         if label is not None:
-            date_str = datetime.now().strftime("%Y-%m-%d")
-            time_str = datetime.now().strftime("%H:%M:%S")
+            date_str = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d")
+            time_str = datetime.now(ZoneInfo("Asia/Kolkata")).strftime("%H:%M:%S")
             st.info(f"ℹ️Detected: {label} at {time_str} ({confidence:.2f})")
-            st.warning("⚠️Please press ✅Confirm to mark or press 🔄Recapture to try again")
+            st.warning("⚠️Please press ✅Confirm to mark) #or press 🔄Recapture to try again")
             col1, col2 = st.columns(2)
             with col1:
                 if st.button("✅ Confirm"):
@@ -150,6 +151,7 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
 
 
