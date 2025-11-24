@@ -114,7 +114,7 @@ if stop_button and st.session_state.camera_running:
     st.session_state.camera_running = False
     if st.session_state.cap:
         st.session_state.cap.release()
-        st.session_state.cap = None
+    st.session_state.cap = None
 
 if st.session_state.camera_running and st.session_state.cap == "browser":
     img_file = st.camera_input("📷 Capture your face")
@@ -150,5 +150,6 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
 
