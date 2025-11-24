@@ -112,7 +112,7 @@ if start_button and not st.session_state.camera_running:
 
 if stop_button and st.session_state.camera_running:
     st.session_state.camera_running = False
-    if st.session_state.cap:
+    if isinstance (st.session_state.cap, cv2.VideoCapture):
         st.session_state.cap.release()
     st.session_state.cap = None
 
@@ -150,6 +150,7 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
 
 
