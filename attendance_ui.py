@@ -142,7 +142,7 @@ if st.session_state.camera_running and st.session_state.cap == "browser":
             with col2:
                 if st.button("🔄 Recapture"):
                     st.warning("Please Confirm if Verified✅")
-        FRAME.image(frame, channels= "BGR")
+        # FRAME.image(frame, channels= "BGR")
 # else:
 #     st.info("Camera Stopped")
 
@@ -150,6 +150,7 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
 
 
 
