@@ -108,7 +108,7 @@ if stop_button and st.session_state.camera_running:
 
 if st.session_state.camera_running and st.session_state.cap == "browser":
     img_file = st.camera_input("📷 Capture your face")
-    if img_file is not none:
+    if img_file is not None:
         bytes_data = img_file.getvalue()
         np_arr = np.frombuffer(bytes_data, np.uint8)
         frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
@@ -140,3 +140,4 @@ if st.button("📊 Finalize Day"):
     update_break_time(file)
 
     st.info("Break time updated")
+
